@@ -36,6 +36,7 @@ import com.naef.jnlua.JavaFunction;
 import com.naef.jnlua.LuaState;
 import com.naef.jnlua.NamedJavaFunction;
 import com.vungle.sdk.VunglePub;
+import com.vungle.publisher.config.Framework;
 
 /**
  * <p>Vungle AdsProvider plugin.</p>
@@ -135,8 +136,9 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
 			if (CoronaLua.isListener(luaState, listenerIndex, CoronaLuaEvent.ADSREQUEST_TYPE)) {
 				luaListener = CoronaLua.newRef(luaState, listenerIndex);
 			}
+			VunglePub.setFramework(Framework.corona);
+			VunglePub.setBitmapFactory(BytesBitmapFactory.getInstance());
 			VunglePub.init(CoronaEnvironment.getApplicationContext(), inputApplicationId);
-			VunglePub.setVungleBitmapFactory(BytesVungleBitmapFactory.getInstance());
 			VunglePub.setEventListener(new VunglePub.EventListener() {
 				@Override
 				public void onVungleAdStart() {
